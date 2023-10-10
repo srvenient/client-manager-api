@@ -1,5 +1,5 @@
 plugins {
-  id("alliance.common-conventions")
+  id("client-manager.common-conventions")
   id("org.springframework.boot") version "3.1.4"
   id("io.spring.dependency-management") version "1.1.3"
 }

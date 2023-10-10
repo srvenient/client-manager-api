@@ -12,7 +12,6 @@ indra {
     minimumToolchain(17)
     strictVersions(true)
   }
-  checkstyle(libs.versions.checkstyle.get())
 
   github("srvenient", "alliance") {
     ci(true)

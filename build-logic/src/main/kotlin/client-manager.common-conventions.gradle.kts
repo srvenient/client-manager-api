@@ -2,7 +2,7 @@ import com.diffplug.gradle.spotless.FormatExtension
 import java.util.*
 
 plugins {
-  id("alliance.base-conventions")
+  id("client-manager.base-conventions")
   id("net.kyori.indra")
   id("net.kyori.indra.crossdoc")
   id("net.kyori.indra.checkstyle")
@@ -11,9 +11,13 @@ plugins {
 
 val libs = extensions.getByType(org.gradle.accessors.dm.LibrariesForLibs::class)
 
+repositories {
+  mavenLocal()
+  mavenCentral()
+}
+
 dependencies {
-  api(platform(project(":alliance-bom")))
-  checkstyle(libs.stylecheck)
+  compileOnly(libs.annotations)
 }
 
 spotless {
@@ -23,7 +27,7 @@ spotless {
     indentWithSpaces(2)
   }
   java {
-    importOrderFile(rootProject.file(".spotless/alliance.importorder"))
+    importOrderFile(rootProject.file(".spotless/client-manager.importorder"))
     applyCommon()
   }
   kotlinGradle {
@@ -34,7 +38,7 @@ spotless {
 indraCrossdoc {
   baseUrl().set(providers.gradleProperty("javadocPublishRoot"))
   nameBasedDocumentationUrlProvider {
-    projectNamePrefix.set("alliance-")
+    projectNamePrefix.set("client-manager-")
   }
 }
 
