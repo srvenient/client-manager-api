@@ -26,11 +26,14 @@ package team.empyte.alliance.core;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+/**
+ * The type Client manager application.
+ */
 @SpringBootApplication
-public class AllianceApplication {
+public class ClientManagerApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(AllianceApplication.class, args);
-    }
+  public static void main(String[] args) {
+    SpringApplication.run(ClientManagerApplication.class, args);
+  }
 
 }

@@ -21,16 +21,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package team.empyte.alliance.core.repository;
+package team.empyte.alliance.core.client.repository;
+
+import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import team.empyte.alliance.core.model.EmployeeModel;
+import team.empyte.alliance.core.client.model.ClientModel;
 
 /**
- * The interface Employee repository.
+ * The interface Client repository.
  */
 @Repository
-public interface EmployeeRepository extends JpaRepository<EmployeeModel, String> {
-
+public interface ClientRepository extends JpaRepository<ClientModel, UUID> {
 }

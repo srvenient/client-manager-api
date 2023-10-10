@@ -1,4 +1,4 @@
-rootProject.name = "alliance-build-logic"
+rootProject.name = "client-manager-build-logic"
 
 dependencyResolutionManagement {
     versionCatalogs {
