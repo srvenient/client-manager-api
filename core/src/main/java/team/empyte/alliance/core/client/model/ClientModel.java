@@ -21,93 +21,104 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package team.empyte.alliance.core.model;
+package team.empyte.alliance.core.client.model;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.UUID;
 
 @Entity
-@Table(name = "employee")
-public class EmployeeModel {
+@Table(name = "clients")
+public class ClientModel {
+
+  @GeneratedValue(strategy = GenerationType.UUID)
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private Long id;
+  private UUID id;
 
-  @Column(name = "sharedKey", length = 60)
+  @Column
   private String sharedKey;
-
-  @Column(name = "businessId", length = 60, unique = true)
+  @Column
   private String businessId;
 
-  @Column(name = "email", length = 60, nullable = false, unique = true)
+  @Column(nullable = false)
+  private String phone;
+  @Column(nullable = false)
   private String email;
 
-  @Column(name = "phone", nullable = false)
-  private int phone;
+  @Column
+  private String dataAdded;
 
-  @Column(name = "dataAdded", length = 60, nullable = false)
-  private String dateAdded;
-
-  public EmployeeModel() {
+  public ClientModel() {
   }
 
-  public EmployeeModel(Long id, String businessId, String email, int phone, String dateAdded) {
+  public ClientModel(
+    final @NotNull UUID id,
+    final @NotNull String sharedKey,
+    final @NotNull String businessId,
+    final @NotNull String phone,
+    final @NotNull String email,
+    final @NotNull String dataAdded
+  ) {
     this.id = id;
+    this.sharedKey = sharedKey;
     this.businessId = businessId;
-    this.email = email;
     this.phone = phone;
-    this.dateAdded = dateAdded;
+    this.email = email;
+    this.dataAdded = dataAdded;
   }
 
-  public Long getId() {
+  public void setId(final @NotNull UUID id) {
+    this.id = id;
+  }
+
+  public @Nullable UUID getId() {
     return this.id;
   }
 
-  public void setId(final Long id) {
-    this.id = id;
-  }
-
-  public String getSharedKey() {
+  public @Nullable String getSharedKey() {
     return this.sharedKey;
   }
 
-  public void setSharedKey(final String sharedKey) {
+  public void setSharedKey(final @NotNull String sharedKey) {
     this.sharedKey = sharedKey;
   }
 
-  public String getBusinessId() {
+  public @NotNull String getBusinessId() {
     return this.businessId;
   }
 
-  public void setBusinessId(final String businessId) {
+  public void setBusinessId(final @NotNull String businessId) {
     this.businessId = businessId;
   }
 
-  public String getEmail() {
-    return this.email;
-  }
-
-  public void setEmail(final String email) {
-    this.email = email;
-  }
-
-  public int getPhone() {
+  public @NotNull String getPhone() {
     return this.phone;
   }
 
-  public void setPhone(final int phone) {
+  public void setPhone(final @NotNull String phone) {
     this.phone = phone;
   }
 
-  public String getDateAdded() {
-    return this.dateAdded;
+  public @NotNull String getEmail() {
+    return this.email;
   }
 
-  public void setDateAdded(final String dateAdded) {
-    this.dateAdded = dateAdded;
+  public void setEmail(final @NotNull String email) {
+    this.email = email;
+  }
+
+  public @Nullable String getDataAdded() {
+    return dataAdded;
+  }
+
+  public void setDataAdded(final @NotNull String dateAdded) {
+    this.dataAdded = dateAdded;
   }
 }
