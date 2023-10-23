@@ -21,13 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package team.empyte.alliance.core.client.repository;
+package team.empyte.alliance.core.repository;
 
 import java.util.UUID;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import team.empyte.alliance.core.client.model.ClientModel;
+import team.empyte.alliance.core.model.ClientModel;
 
 /**
  * The interface Client repository.

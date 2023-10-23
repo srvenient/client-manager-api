@@ -21,16 +21,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package team.empyte.alliance.core.client.controller;
+package team.empyte.alliance.core.controller;
 
 import jakarta.annotation.Nullable;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
-
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -40,9 +38,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import team.empyte.alliance.core.client.model.ClientModel;
-import team.empyte.alliance.core.client.model.ClientModelManager;
-import team.empyte.alliance.core.client.repository.ClientRepository;
+import team.empyte.alliance.core.model.ClientModel;
+import team.empyte.alliance.core.repository.ClientRepository;
+import team.empyte.alliance.core.util.StringUtil;
 
 /**
  * The type Client controller.
@@ -94,14 +92,14 @@ public class ClientController {
    * @param clientModel the client model
    * @return the client model
    */
-  @PostMapping("/clients")
-  public @Nullable ClientModel createClient(final @NotNull @RequestBody ClientModel clientModel) {
+  @PostMapping("/clients/register")
+  public @Nullable ClientModel registerClient(final @NotNull @RequestBody ClientModel clientModel) {
     if (clientModel.getId() == null) {
       clientModel.setId(UUID.randomUUID());
     }
 
     if (clientModel.getSharedKey() == null) {
-      clientModel.setSharedKey(ClientModelManager.generateSharedKey(clientModel.getBusinessId()));
+      clientModel.setSharedKey(StringUtil.generateSharedKey(clientModel.getBusinessId()));
     }
 
     if (clientModel.getDataAdded() == null) {

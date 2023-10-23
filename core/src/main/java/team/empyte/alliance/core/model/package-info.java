@@ -1,4 +1,4 @@
 /**
  * This package contains the models used by the client.
  */
-package team.empyte.alliance.core.client.model;
+package team.empyte.alliance.core.model;

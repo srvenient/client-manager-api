@@ -21,16 +21,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package team.empyte.alliance.core.client.model;
+package team.empyte.alliance.core.util;
 
 import java.util.Arrays;
 import java.util.Collections;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * The type Client model manager.
+ * The String util class.
  */
-public final class ClientModelManager {
+public final class StringUtil {
 
   /**
    * Generate shared key.
@@ -76,7 +76,4 @@ public final class ClientModelManager {
     return builder.toString();
   }
 
-  private boolean isExist(final @NotNull String[] names, final @NotNull String name) {
-    return Arrays.asList(names).contains(name);
-  }
 }
