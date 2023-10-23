@@ -1,7 +1,9 @@
-import gradle.kotlin.dsl.accessors._adcf4d67bb571b32ed21abd8736e6c1e.indra
+import com.diffplug.gradle.spotless.FormatExtension
+import java.util.*
 
 plugins {
-  id("net.kyori.indra.publishing")
+  id("net.kyori.indra")
+  id("com.diffplug.spotless")
 }
 
 val libs = extensions.getByType(org.gradle.accessors.dm.LibrariesForLibs::class)
@@ -12,23 +14,51 @@ indra {
     minimumToolchain(17)
     strictVersions(true)
   }
+}
 
-  github("srvenient", "alliance") {
-    ci(true)
+repositories {
+  mavenLocal()
+  mavenCentral()
+}
+
+dependencies {
+  compileOnly(libs.annotations)
+}
+
+spotless {
+  fun FormatExtension.applyCommon() {
+    trimTrailingWhitespace()
+    endWithNewline()
+    indentWithSpaces(2)
   }
-  mitLicense()
+  java {
+    importOrderFile(rootProject.file(".spotless/client-manager.importorder"))
+    removeUnusedImports()
+    applyCommon()
+  }
+  kotlinGradle {
+    applyCommon()
+  }
+}
 
-  signWithKeyFromPrefixedProperties("alliance")
-  configurePublications {
-    pom {
-      developers {
-        developer {
-          id.set("srvenient")
-          name.set("Nelson Roa")
-          url.set("https://github.com/srvenient")
-          email.set("srvenient@gmail.com")
-        }
-      }
+tasks {
+  jar {
+    manifest {
+      attributes(
+        "Specification-Version" to project.version,
+        "Specification-Vendor" to "emptyte-team",
+        "Implementation-Build-Date" to Date()
+      )
     }
+  }
+
+  javadoc {
+    options.encoding = Charsets.UTF_8.name()
+  }
+
+  compileJava {
+    options.encoding = Charsets.UTF_8.name()
+    dependsOn(spotlessApply)
+    options.compilerArgs.add("-parameters")
   }
 }
