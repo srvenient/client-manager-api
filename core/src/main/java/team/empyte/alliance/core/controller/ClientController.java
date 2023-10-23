@@ -24,6 +24,8 @@
 package team.empyte.alliance.core.controller;
 
 import jakarta.annotation.Nullable;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -31,12 +33,15 @@ import java.util.List;
 import java.util.UUID;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import team.empyte.alliance.core.model.ClientModel;
 import team.empyte.alliance.core.repository.ClientRepository;
@@ -69,8 +74,8 @@ public class ClientController {
    * @param sharedKey the shared key
    * @return the clients by shared key
    */
-  @GetMapping("/clients/{sharedKey}")
-  public @Nullable List<ClientModel> getClientsBySharedKey(final @NotNull @PathVariable String sharedKey) {
+  @GetMapping("/clients/search/{sharedKey}")
+  public @Nullable ResponseEntity<List<ClientModel>> getClientsBySharedKey(final @NotNull @PathVariable String sharedKey) {
     final var clients = new ArrayList<ClientModel>();
     for (final var client : this.clientRepository.findAll()) {
       final var sk = client.getSharedKey();
@@ -83,8 +88,34 @@ public class ClientController {
       }
     }
 
-    return clients;
+    return new ResponseEntity<>(clients, HttpStatus.OK);
   }
+
+  @GetMapping(
+    value = "/clients/search/advanced",
+    params = {"businessId", "phone", "email"}
+  )
+  public @Nullable ResponseEntity<List<ClientModel>> getClientsByAdvancedSearch(
+    final @NotNull @RequestParam(required = false) String businessId,
+    final @NotNull @RequestParam(required = false) String phone,
+    final @NotNull @RequestParam(required = false) String email
+  ) {
+    final var clients = new ArrayList<ClientModel>();
+    for (final var client : this.clientRepository.findAll()) {
+      if (URLDecoder.decode(businessId, StandardCharsets.UTF_8).equals(client.getBusinessId())
+        && URLDecoder.decode(phone, StandardCharsets.UTF_8).equals(client.getPhone())
+        && URLDecoder.decode(email, StandardCharsets.UTF_8).equals(client.getEmail())) {
+        clients.add(client);
+      }
+    }
+
+    if (clients.isEmpty()) {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    } else {
+      return new ResponseEntity<>(clients, HttpStatus.OK);
+    }
+  }
+
 
   /**
    * Create client model.
